@@ -1,6 +1,6 @@
-﻿<div align="center">
+<div align="center">
 
-# ?? Cinematic Vibe Matcher
+# 🎬 Cinematic Vibe Matcher
 
 **An NLP-powered system that analyzes the emotional DNA of movies and matches them with songs that share the same vibe — using semantic embeddings and hybrid similarity search.**
 
@@ -14,7 +14,7 @@
 
 ---
 
-## ?? What Is This?
+## 🎯 What Is This?
 
 Most recommendation systems match movies and songs by genre tags or metadata.
 **Cinematic Vibe Matcher goes deeper** — it reads a movie's plot, tone, and emotional weight,
@@ -25,66 +25,66 @@ converts that meaning into a 768-dimensional semantic vector, and finds songs th
 
 ---
 
-## ? Features
+## ✨ Features
 
 | Feature | Description |
 |---|---|
-| ?? **Semantic NLP** | Movie overviews embedded with `all-mpnet-base-v2` (768-dim) via sentence-transformers |
-| ?? **Hybrid Matching** | Combines semantic cosine similarity + audio feature profiles (valence, energy, tempo) |
-| ? **Adaptive Alpha** | Sigmoid-based weight tuning — balances content vs audio score per movie automatically |
-| ??? **pgvector Search** | Fast vector similarity queries in PostgreSQL — no external vector DB needed |
-| ?? **Interactive Dashboard** | Dark cinematic Streamlit UI with live Plotly score distributions |
-| ?? **Feedback Loop** | Users can rate matches; feedback stored for future model improvement |
-| ?? **One-Command Deploy** | Full stack runs with a single `docker compose up` |
+| 🧠 **Semantic NLP** | Movie overviews embedded with `all-mpnet-base-v2` (768-dim) via sentence-transformers |
+| 🎵 **Hybrid Matching** | Combines semantic cosine similarity + audio feature profiles (valence, energy, tempo) |
+| ⚡ **Adaptive Alpha** | Sigmoid-based weight tuning — balances content vs audio score per movie automatically |
+| 🗄️ **pgvector Search** | Fast vector similarity queries in PostgreSQL — no external vector DB needed |
+| 📊 **Interactive Dashboard** | Dark cinematic Streamlit UI with live Plotly score distributions |
+| 🔁 **Feedback Loop** | Users can rate matches; feedback stored for future model improvement |
+| 🐳 **One-Command Deploy** | Full stack runs with a single `docker compose up` |
 
 ---
 
-## ??? Architecture
+## 🏗️ Architecture
 ```
-ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฟ
-ณ                    CINEMATIC VIBE MATCHER                   ณ
-ภฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤู
++-------------------------------------------------------------+
+|                    CINEMATIC VIBE MATCHER                   |
++-------------------------------------------------------------+
 
-  ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฟ    ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฟ
-  ณ  Data Layer  ณ    ณ           NLP Pipeline               ณ
-  ณ              ณ    ณ                                      ณ
-  ณ  TMDB API ฤฤณ    ณ  Movie Overview                      ณ
-  ณ  IMDb Data   ณ    ณ      ณ                               ณ
-  ณ  MusicBrainz ณ    ณ                                     ณ
-  ภฤฤฤฤฤฤ?ฤฤฤฤฤฤฤู    ณ  sentence-transformers               ณ
-         ณ            ณ  (all-mpnet-base-v2, 768-dim)        ณ
-                     ณ      ณ                               ณ
-  ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฟ    ณ                                     ณ
-  ณ  PostgreSQL  ณฤฤฤณ  Embedding Vector ฤฤ pgvector       ณ
-  ณ  + pgvector  ณ    ณ                                      ณ
-  ณ              ณ    ณ  spaCy (NER) + VADER (Sentiment)     ณ
-  ณ  movies      ณ    ภฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤู
-  ณ  songs       ณ
-  ณ  vibe_matchesณ    ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฟ
-  ณ  feedback    ณ    ณ        Hybrid Matching Engine        ณ
-  ภฤฤฤฤฤฤ?ฤฤฤฤฤฤฤู    ณ                                      ณ
-         ณ            ณ  cosine_sim(movie_emb, song_emb)     ณ
-                     ณ         x  alpha  (content)          ณ
-  ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฟ    ณ  +                                   ณ
-  ณ  FastAPI     ณ    ณ  audio_profile_match(genre, song)    ณ
-  ณ              ณ    ณ         x (1-alpha) (audio)          ณ
-  ณ  GET /recommend   ณ                                      ณ
-  ณ  POST /feedback   ณ  alpha = sigmoid(popularity, vote)   ณ
-  ภฤฤฤฤฤฤ?ฤฤฤฤฤฤฤู    ภฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤู
-         ณ
-         
-  ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฟ
-  ณ  Streamlit   ณ
-  ณ  Dashboard   ณ
-  ณ              ณ
-  ณ  Dark Cinema ณ
-  ณ  UI + Plotly ณ
-  ภฤฤฤฤฤฤฤฤฤฤฤฤฤฤู
+  +--------------+    +--------------------------------------+
+  |  Data Layer  |    |           NLP Pipeline               |
+  |              |    |                                      |
+  |  TMDB API    |    |  Movie Overview                      |
+  |  IMDb Data   |    |      |                               |
+  |  MusicBrainz |    |      v                               |
+  +--------------+    |  sentence-transformers               |
+         |            |  (all-mpnet-base-v2, 768-dim)        |
+         v            |      |                               |
+  +--------------+    |      v                               |
+  |  PostgreSQL  |<---|  Embedding Vector --> pgvector       |
+  |  + pgvector  |    |                                      |
+  |              |    |  spaCy (NER) + VADER (Sentiment)     |
+  |  movies      |    +--------------------------------------+
+  |  songs       |
+  |  vibe_matches|    +--------------------------------------+
+  |  feedback    |    |        Hybrid Matching Engine        |
+  +--------------+    |                                      |
+         |            |  cosine_sim(movie_emb, song_emb)     |
+         v            |         x  alpha  (content)          |
+  +--------------+    |  +                                   |
+  |  FastAPI     |    |  audio_profile_match(genre, song)    |
+  |              |    |         x (1-alpha) (audio)          |
+  |  GET /recommend   |                                      |
+  |  POST /feedback   |  alpha = sigmoid(popularity, vote)   |
+  +--------------+    +--------------------------------------+
+         |
+         v
+  +--------------+
+  |  Streamlit   |
+  |  Dashboard   |
+  |              |
+  |  Dark Cinema |
+  |  UI + Plotly |
+  +--------------+
 ```
 
 ---
 
-## ?? Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
@@ -104,14 +104,14 @@ docker compose up
 
 | Service | URL |
 |---|---|
-| ?? Dashboard | http://localhost:8501 |
-| ? API | http://localhost:8000 |
-| ?? API Docs | http://localhost:8000/docs |
-| ??? Database | localhost:5432 |
+| 🎬 Dashboard | http://localhost:8501 |
+| ⚡ API | http://localhost:8000 |
+| 📖 API Docs | http://localhost:8000/docs |
+| 🗄️ Database | localhost:5432 |
 
 ---
 
-## ??? Tech Stack
+## 🛠️ Tech Stack
 
 ### Core ML / NLP
 | Tool | Role |
@@ -137,32 +137,32 @@ docker compose up
 
 ---
 
-## ?? Project Structure
+## 📁 Project Structure
 ```
 cinematic-vibe-matcher/
-?ฤฤ src/
-ณ   ?ฤฤ dashboard/
-ณ   ณ   ภฤฤ app.py              # Streamlit dark cinematic UI
-ณ   ?ฤฤ api/
-ณ   ณ   ภฤฤ main.py             # FastAPI endpoints
-ณ   ?ฤฤ nlp/
-ณ   ณ   ภฤฤ processor.py        # NLPProcessor class
-ณ   ?ฤฤ matching/
-ณ   ณ   ภฤฤ engine.py           # Hybrid matching engine
-ณ   ภฤฤ data_pipeline/
-ณ       ?ฤฤ fetch_movies.py     # TMDB data ingestion
-ณ       ภฤฤ fetch_songs.py      # Song data ingestion
-?ฤฤ docker-compose.yml
-?ฤฤ Dockerfile.api
-?ฤฤ Dockerfile.dashboard
-?ฤฤ requirements.txt
-?ฤฤ .env.example
-ภฤฤ README.md
+├── src/
+│   ├── dashboard/
+│   │   └── app.py              # Streamlit dark cinematic UI
+│   ├── api/
+│   │   └── main.py             # FastAPI endpoints
+│   ├── nlp/
+│   │   └── processor.py        # NLPProcessor class
+│   ├── matching/
+│   │   └── engine.py           # Hybrid matching engine
+│   └── data_pipeline/
+│       ├── fetch_movies.py     # TMDB data ingestion
+│       └── fetch_songs.py      # Song data ingestion
+├── docker-compose.yml
+├── Dockerfile.api
+├── Dockerfile.dashboard
+├── requirements.txt
+├── .env.example
+└── README.md
 ```
 
 ---
 
-## ?? API Reference
+## 🔌 API Reference
 
 ### `GET /recommend/{movie_id}`
 Returns top-10 song matches for a given movie.
@@ -195,35 +195,35 @@ Submit a rating for a movie-song match.
 
 ---
 
-## ?? How the Matching Works
+## 🧠 How the Matching Works
 ```
-hybrid_score = (? ? content_score) + ((1 - ?) ? audio_score)
+hybrid_score = (alpha x content_score) + ((1 - alpha) x audio_score)
 
 where:
   content_score = cosine_similarity(movie_embedding, song_embedding)
   audio_score   = genre_audio_profile_match(movie_genre, song_features)
-  ?             = sigmoid(movie_popularity, vote_average)
-                   high popularity/rating  trust content more
-                   low signal movies       rely more on audio features
+  alpha         = sigmoid(movie_popularity, vote_average)
+                  -> high popularity/rating -> trust content more
+                  -> low signal movies      -> rely more on audio features
 ```
 
 This adaptive alpha means the system **self-tunes** based on how much data exists about each movie — a key design decision that mirrors production ML systems.
 
 ---
 
-## ?? Dataset
+## 📊 Dataset
 
 | Table | Count | Source |
 |---|---|---|
 | Movies | 40 | TMDB API |
 | Songs | 39 | MusicBrainz + Mock Audio Features* |
-| Vibe Matches | 390 | Generated (40 ? 10 top matches) |
+| Vibe Matches | 390 | Generated (40 x 10 top matches) |
 
-*\*Note: Audio features use genre-based mock profiles due to Spotify API policy changes in 2024. Real audio analysis can be plugged in via [Essentia](https://essentia.upf.edu/).*
+*Note: Audio features use genre-based mock profiles due to Spotify API policy changes in 2024. Real audio analysis can be plugged in via [Essentia](https://essentia.upf.edu/).*
 
 ---
 
-## ??? Roadmap
+## 🗺️ Roadmap
 
 - [ ] Real audio feature extraction with Essentia
 - [ ] User playlist import (Spotify OAuth)
@@ -232,11 +232,10 @@ This adaptive alpha means the system **self-tunes** based on how much data exist
 
 ---
 
-## ?? Author
+## 👤 Author
 
 **Wongsatorn Paikoh (Notto)**
 Digitech Student at Suranaree University of Technology — building real-world systems that bridge data science and business impact.
-
 
 [![GitHub](https://img.shields.io/badge/GitHub-nottoboyz-181717?style=flat&logo=github)](https://github.com/nottoboyz)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Wongsatorn-0A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/wongsatorn-paikoh-bb46953a9/)
@@ -244,5 +243,5 @@ Digitech Student at Suranaree University of Technology — building real-world s
 ---
 
 <div align="center">
-  <sub>Built with ? and a genuine love for both cinema and music.</sub>
+  <sub>Built with coffee and a genuine love for both cinema and music.</sub>
 </div>
