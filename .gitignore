@@ -1,0 +1,68 @@
+# ── Environment & Secrets ─────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.Python
+
+# ── Virtual Environments ──────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ── Raw Data ──────────────────────────────────────────────────────────────────
+data/raw/
+data/interim/
+data/processed/
+*.csv
+*.parquet
+*.pkl
+*.pickle
+
+# ── ML Models & Embeddings ────────────────────────────────────────────────────
+models/
+*.pt
+*.pth
+*.bin
+*.safetensors
+sentence_transformers_cache/
+.cache/
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+docker-volumes/
+pgdata/
+
+# ── IDEs ──────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── OS ────────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Notebooks (optional: remove if you version notebooks) ────────────────────
+.ipynb_checkpoints/
+
+# ── pytest / coverage ────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/

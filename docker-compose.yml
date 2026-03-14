@@ -1,0 +1,51 @@
+services:
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: vibe_postgres
+    environment:
+      POSTGRES_USER: vibeuser
+      POSTGRES_PASSWORD: vibepass
+      POSTGRES_DB: vibedb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vibeuser -d vibedb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: vibe_api
+    environment:
+      DATABASE_URL: postgresql+asyncpg://vibeuser:vibepass@postgres:5432/vibedb
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.dashboard
+    container_name: vibe_dashboard
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: vibeuser
+      DB_PASSWORD: vibepass
+      DB_NAME: vibedb
+    ports:
+      - "8501:8501"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
